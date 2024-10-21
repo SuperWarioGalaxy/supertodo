@@ -1,8 +1,8 @@
 {% extends "./base.html" %}
 {% block title %}Tasks | Home{% endblock title %}
 {% block body %}
-  <h1>Welcome to the taks manager</h1>
-  <table>
+  <p class="h1">Welcome to the taks manager</p>
+  <table class="table table-striped">
     <thead>
       <tr>
         <th><a href="{% url "tasks:task-list" %}">Total tasks</a></th>
@@ -19,24 +19,24 @@
     </tbody>
   </table>
   <a href="{% url 'tasks:add-task'%}">Crear Tarea</a> 
-  <div class="tasks">
+  <div class="row">
     {%for task in tasks%}
-    <div class="task">
+    <div class="container col-sm bg-primary mt-4 p-3 rounded">
         <a href="{% url 'tasks:task-detail' task.slug %}">{{task}} : {%if task.done%}
           ✅
         {% else %}   
           ❌
         {% endif %}</a> 
-       
-        <a href="{% url 'tasks:task-toggle' task.slug %}"><button>
+       <br>
           {%if task.done%}
-            Unfinish
+            <a href="{% url 'tasks:task-toggle' task.slug %}"><button class="btn btn-secondary">Unfinish</button></a>
           {% else %}   
-            Complete
-          {% endif %}</button></a>
-        <a href="{% url 'tasks:task-edit' task.slug %}"><button>Edit</button></a>
-        <a href="{% url 'tasks:task-delete' task.slug %}"><button>Delete</button></a>
+          <a href="{% url 'tasks:task-toggle' task.slug %}"><button class="btn btn-success">Complete</button></a>
+          {% endif %}
+        <a href="{% url 'tasks:task-edit' task.slug %}"><button class="btn btn-info">Edit</button></a>
+        <a href="{% url 'tasks:task-delete' task.slug %}"><button class="btn btn-danger">Delete</button></a>
     </div>
+    
     {% endfor %}
   </div>
 {% endblock body %}
