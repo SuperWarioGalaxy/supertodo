@@ -1,0 +1,42 @@
+{% extends "./base.html" %}
+{% block title %}Tasks | Home{% endblock title %}
+{% block body %}
+  <h1>Welcome to the taks manager</h1>
+  <table>
+    <thead>
+      <tr>
+        <th><a href="{% url "tasks:task-list" %}">Total tasks</a></th>
+        <th><a href="{% url "tasks:show-done" %}">Total ✅</a></th>
+        <th><a href="{% url "tasks:show-pending" %}">Total ❌</a></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td> <strong>{{num_tasks}}</strong> task{{num_tasks | pluralize}}</td>
+        <td><strong>{{num_d}}</strong> task{{num_d | pluralize}}</td>
+        <td><strong>{{num_f}}</strong> task{{num_f | pluralize}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <a href="{% url 'tasks:add-task'%}">Crear Tarea</a> 
+  <div class="tasks">
+    {%for task in tasks%}
+    <div class="task">
+        <a href="{% url 'tasks:task-detail' task.slug %}">{{task}} : {%if task.done%}
+          ✅
+        {% else %}   
+          ❌
+        {% endif %}</a> 
+       
+        <a href="{% url 'tasks:task-toggle' task.slug %}"><button>
+          {%if task.done%}
+            Unfinish
+          {% else %}   
+            Complete
+          {% endif %}</button></a>
+        <a href="{% url 'tasks:task-edit' task.slug %}"><button>Edit</button></a>
+        <a href="{% url 'tasks:task-delete' task.slug %}"><button>Delete</button></a>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock body %}

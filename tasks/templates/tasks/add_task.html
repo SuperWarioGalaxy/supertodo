@@ -1,0 +1,12 @@
+{% extends "./base.html" %}
+{% block title %}Task | Creation{% endblock title %}
+{% block body %}
+
+  <form method="post">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Crear">
+  </form>
+
+  <a href="{% url 'tasks:task-list' %}">Volver</a> 
+{% endblock body %}
